@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'brynblog',
   author: 'bryn wibowo',
   headerTitle: 'brynblog',
-  description: 'code, linux, and anything',
+  description: 'code, linux, and opensource',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://brynblog.vercel.app',
