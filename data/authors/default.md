@@ -9,5 +9,5 @@ linkedin: ''
 github: https://github.com/brynwibowo
 ---
 
-Hi! Saya Bryan Wibowo, 
-Blog ini tempat Saya belajar menulis, Saya menyukai code, Linux, FreeBSD dan FOSS
+Hi! Saya bryan wibowo, 
+Blog ini tempat saya menulis pengalaman saya menggunakan linux, menginstal dan konfigurasi aplikasi opensource, dan menulis kode.
