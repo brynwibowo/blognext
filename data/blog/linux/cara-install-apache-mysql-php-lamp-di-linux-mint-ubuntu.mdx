@@ -1,0 +1,75 @@
+---
+title: 'Cara Install Apache, MySQL, PHP (LAMP) di Ubuntu dan Linux Mint'
+date: '2022-01-20'
+tags: ['linux', 'apache', 'mysql', 'php', 'ubuntu', 'linux mint']
+draft: false
+summary: 'menginstall apache, mysql, php di ubuntu dan linux mint'
+bibliography: references-data.bib
+---
+
+## Isi konten :
+
+<TOCInline toc={props.toc} exclude="Isi konten :" toHeading={2} />
+
+Proses instalasi dilakukan sepenuhnya menggunakan terminal, buka terminal **Ctrl**+**Alt**+**T**
+
+## Langkah-1: Update Sistem
+
+Sebelum melakukan proses install, update sistem terlebih dahulu
+
+```bash
+sudo apt update
+```
+
+masukkan password root, tekan enter dan tunggu hingga proses update selesai
+
+## Langkah-2: Install Apache
+
+```bash
+sudo apt install apache2
+```
+
+Setelah apache selesai diinstall, buka peramban dan jalankan url localhost
+jika halaman web apache tidak muncul, buka terminal kembali dan jalankan perintah:
+
+```bash
+sudo systemctl start apache2
+sudo systemctl enable apache2
+```
+
+Allow port 80 (http) dan 443 (https) pada firewall
+
+```bash
+sudo ufw allow http
+sudo ufw allow https
+```
+
+## Langkah-3: Install MySQL
+
+```bash
+sudo apt install mysql-server
+```
+
+Untuk meningkatkan keamanan akun root mysql, jalankan perintah:
+
+```bash
+sudo mysql_secure_installation
+```
+
+Untuk menjalankan mysql jalankan perintah :
+
+```bash
+sudo mysql -u root
+```
+
+## Langkah-4: Install PHP
+
+```bash
+sudo apt install php libapache2-mod-php php-mysql
+```
+
+cek versi php
+
+```bash
+php -v
+```
