@@ -9,5 +9,5 @@ linkedin: ''
 github: https://github.com/brynwibowo
 ---
 
-Hi! Saya bryan wibowo, 
-Blog ini tempat saya menulis pengalaman saya menggunakan linux, menginstal dan konfigurasi aplikasi opensource, dan menulis kode.
+Hi! Saya bryan wibowo,
+Saya akan menulis apa saja saat terlintas kembali masalah yang pernah atau sedang saya alami berkaitan dengan kode dan linux.
