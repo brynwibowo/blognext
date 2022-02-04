@@ -1,0 +1,43 @@
+---
+title: 'Belajar Python: Komentar Pada Python'
+date: '2022-02-03'
+tags: ['python']
+draft: false
+summary: 'Komentar atau comment juga tersedia di python, artikel ini akan menjelaskan bagaimana penulisan komentar pada python'
+---
+
+## Komentar
+
+Komentar (Comment) adalah kode yang tidak akan dieksekusi atau tidak akan dijalankan oleh mesin. Biasanya komentar ditulis untuk keperluan dokumentasi
+supaya kode program mudah untuk dikembangkan lagi oleh programmer itu sendiri ataupun programmer lain. Komentar pada python
+menggunakan tanda `#` untuk komentar satu baris misalkan `# Ini adalah komentar satu baris` sedangkan komentar untuk
+lebih dari satu baris seperti berikut
+
+```python
+"""
+Ini adalah komentar
+lebih dari satu baris
+komentar diapit oleh tiga kali petik dua
+"""
+```
+
+## Percobaan
+
+Buat file python baru, buka terminal **Ctrl**+**Alt**+**T** ketikkan `nano python-komentar.py` lalu tekan enter.
+Ketik atau copas kode berikut :
+
+```python
+print(123456)
+print("halo python !")
+# print("kode ini tidak akan dieksekusi")
+print("kode ini dieksekusi")
+# ini adalah komentar satu baris
+"""
+kode ini juga
+tidak akan
+di eksekusi
+oleh mesin
+"""
+```
+
+jalankan program, maka yang dicetak program adalah `123456`, `halo python !` dan `kode ini dieksekusi`
