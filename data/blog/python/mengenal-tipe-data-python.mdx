@@ -1,0 +1,80 @@
+---
+title: 'Belajar Python: Mengenal Tipe Data Pada Python'
+date: '2022-02-04'
+tags: ['python']
+draft: false
+summary: 'Langkah awal belajar python adalah menginstal python di sistem operasi komputer kita'
+bibliography: references-data.bib
+---
+
+## Tipe Data Pada Python
+
+Tipe data adalah media atau memori pada komputer untuk menyimpan informasi sementara, berikut
+tipe data pada python :
+| Tipe Data | Contoh | Penjelasan |
+| ----------- | ----------- | ----------- |
+| Boolean | `True` atau `False` | True menyatakan benar bernilai **1** dan False menyatakan salah bernilai **0** |
+| String | `"Ayo belajar Python!"` | Menyimpan data karakter atau kalimat yang bisa berupa huruf, angka dan simbol |
+| Integer | `12` atau `2022` | Data bertipe bilangan bulat |
+| Float | `0.25` atau `3.14` | Bilangan desimal atau bilangan yang memiliki pecahan |
+|Hexadecimal | `7c` atau `12a3` | Bilangan heksa atau bilangan berbasis 16 |
+|Complex | `9y` | Data bukan real atau data imajiner |
+| List | `['apple', 123, 3.14]` | Data untaian yang menyimpan berbagai tipe data dan isinya bisa diubah-ubah |
+| Tuple | `('apple', 123, 3.14)` | Data untaian yang menyimpan berbagai tipe data tapi isinya tidak bisa diubah |
+| Dictionary | `{'nik': 1234,'nama': 'Bagas'}` | Data untaian yang menyimpan berbagai tipe data berupa pasangan penunjuk dan nilai |
+
+## Percobaan
+
+Buka terminal **Ctrl**+**Alt**+**T**, buat file python baru
+
+```bash
+nano python-tipedata.py
+```
+
+tulis atau copas kode di bawah ini
+
+```python:python-tipedata.py
+##ini adalah text python pertama
+"""
+belajar bahasa python
+Mengenal tipe data
+"""
+
+#tipe data boolean
+print(True)
+
+#tipe data string
+print("Hello World")
+print('ayo belajar python')
+
+#tipe data integer
+print(20)
+
+#tipe data float
+print(3.14)
+
+#tipe data hexadecimal
+#print(9a) error
+
+#tipe data complex
+print(9y)
+
+#tipe data list
+print([1,2,3,4,5])
+print(["satu","dua","tiga","empat","lima"])
+
+#tipe data Tuple
+print((1,2,3,4,5))
+print(("satu","dua","tiga","empat","lima"))
+
+#tipe data dictionary
+print({"nama":"Budi",'umur':20})
+
+#tipe data Dictionary dimasukkan ke dalam variabel data
+biodata = {"nama":"Andi",'umur':21}
+print(biodata) #proses pencetakan variabel biodata yg berisi tipe data dictionary
+print(type(biodata)) #fungsi mengecek jenis tipe data
+
+```
+
+simpan kode, lalu jalankan program `python python-tipedata.py`
