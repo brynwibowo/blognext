@@ -1,0 +1,83 @@
+---
+title: 'Cara Instal Composer dan Membuat Project Laravel di Linux'
+date: '2022-02-07'
+tags: ['php', 'laravel']
+draft: false
+summary: 'Isi konten ini menjelaskan bagaimana menginstal composer, mengaktifkan ekstensi php, dan membuat project laravel'
+bibliography: references-data.bib
+---
+
+## Isi konten :
+
+<TOCInline toc={props.toc} exclude="Isi konten :" toHeading={2} />
+Laravel adalah framework PHP dengan arsitektur MVC (Model-View-Controller) yang menyediakan banyak fitur
+lengkap dan kinerja yang powerfull. Laravel merupakan framework php yang paling banyak digunakan hingga
+saat ini. Sebelum ke tahap selanjutnya, apabila belum menginstal LAMP (Linux-Apache-MySQL-PHP) simak
+penjelasan [instal LAMP di Linux Ubuntu](https://brynwibowo.vercel.app/blog/linux/cara-install-apache-mysql-php-lamp-di-linux-mint-ubuntu)
+jika sudah bisa ke tahap selanjutnya :
+
+## Mengaktifkan PHP Extension
+
+Masuk ke terminal **Ctrl**+**Alt**+**T** dan buka file konfigurasi `php.ini` dengan `nano`
+
+```bash
+sudo nano /etc/php/php.ini
+```
+
+tekan tombol **Ctrl**+**W** lalu ketik `bcmath` dan enter untuk melakukan pencarian
+
+![php.ini](/static/images/php-ini.png)
+
+uncomment atau hilangkan tanda `;` pada `;extension bcmath`, kemudian lakukan hal yang sama pada
+`;extension pdo_mysql` dan `;extension zip`, terakhir simpan dengan tekan **Ctrl**+**W** enter
+
+## Install Composer
+
+Composer adalah paket manager PHP yang akan digunakan untuk menginstal laravel dan paket pendukungnya.
+Install composer dengan perintah PHP :
+
+```bash
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+```
+
+```bash
+sudo php composer-setup.php --install-dir=/bin --filename=composer
+```
+
+## Instal atau Membuat Project Laravel
+
+1. **Membuat Project Laravel dengan Composer**
+
+```bash
+composer create-project --prefer-dist laravel/laravel laravel-project
+```
+
+2. **Membuat Project Laravel dengan Laravel installer**
+
+Untuk proses instal laravel dengan perintah yang singkat bisa menggunakan laravel installer, ikuti langkah berikut :
+
+```bash
+composer global require laravel/installer
+```
+
+ekspor variabel path
+
+```bash
+echo 'export PATH="$PATH:$HOME/.config/composer/vendor/bin"' >> ~/.bashrc
+```
+
+```bash
+source ~/.bashrc
+```
+
+jalankan perintah `laravel`
+
+![php.ini](/static/images/laravel.png)
+
+maka akan muncul pilihan menu pada perintah laravel, untuk membuat project laravel dengan perintah :
+
+```bash
+laravel new nama-project-laravel
+```
+
+sesuaikan `nama-project-laravel` dengan yang diinginkan.
