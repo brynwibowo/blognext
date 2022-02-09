@@ -10,4 +10,4 @@ github: https://github.com/brynwibowo
 ---
 
 Hi! Saya bryan wibowo,
-Saya akan menulis apa saja saat terlintas kembali masalah yang pernah atau sedang saya alami berkaitan dengan kode dan linux.
+Saya sedang belajar menulis tentang kode, linux, dan apapun yang mungkin sedang menjadi masalah kita saat ini. Saya sangat antusias untuk mendapatkan pengetahuan baru dan membagikannya di blog ini.
