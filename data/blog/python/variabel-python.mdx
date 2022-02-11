@@ -1,0 +1,68 @@
+---
+title: 'Belajar Python: Variabel Python'
+date: '2022-02-10'
+tags: ['python']
+draft: false
+summary: 'Memahami apa itu variabel dan bagaimana aturan penulisan variabel pada python'
+---
+
+## Variabel Python
+
+Variabel adalah lokasi memori yang dapat menyimpan suatu nilai, jika diibaratkan di dalam kehidupan nyata
+maka variabel adalah sebuah gedung yang memiliki nama, alamat dan gedung tersebut dapat di isi dengan benda apapun.
+Saat membuat sebuah variabel artinya kita memesan beberapa ruang di dalam memori. Variabel dapat diisi dengan
+data bertipe apapun dan data dapat diubah saat mengeksekusi perintah yang menggunakan variabel tersebut.
+Variabel pada python bersifat dinamis tanpa harus mendeklarasikan tipe datanya terlebih dahulu dan isi data variabel
+dapat diubah saat program dieksekusi.
+
+## Aturan Penulisan Variabel Python
+
+Penulisan variabel memiliki aturan-aturan tertentu yang apabila tidak dipatuhi maka akan terjadi error saat mengeksekusi program.
+Aturan penulisan variabel python meliputi :
+
+1. Penulisan variabel diawali dengan karakter huruf atau garis bawah (_underscore_) `_`.
+2. Penulisan variabel selanjutnya bisa dengan huruf, angka, atau garis bawah (_underscore_) `_`.
+3. Penulisan variabel python bersifat sensitif (_case-sensitive_) artinya karakter huruf kapital (_uppercase_) dengan huruf kecil (_lowcase_) dianggap berbeda.
+
+## Percobaan
+
+Untuk menulis variabel python dimulai dengan nama variabel diikuti tanda samadengan `=` dan diikuti nilai vaiabel,
+perhatikan dan coba penulisan variabel berikut :
+
+```python
+# Belajar Penulisan Variabel
+
+# data bertipe string ditulis didalam tanda kutip satu atau kutip dua
+nama = 'Bagas'
+alamat = "Jalan Kenangan No. 28"
+
+# jika data bernilai angka, penulisan tanpa tanda kutip
+umur = 21
+
+print('Nama :',nama,',Alamat :',alamat,',Umur :',umur)
+
+# Mengubah isi dari variabel alamat
+alamat = "Jalan Pramuka No. 11"
+
+# jika data bernilai angka, penulisan tanpa tanda kutip
+panjang = 8
+lebar = 12
+luas = panjang * lebar
+print(luas)
+
+"""
+Penulisan variabel diawali simbol seperti $nama, diawali angka seperti 86amanbos tidak diperkenankan,
+gunakan garis bawah '_' untuk karakter pertama nama variabel
+"""
+_nama = "Bambang Hermanto"
+print (_nama)
+
+# variabel nama berbeda dengan Nama, alamat berbeda dengan Alamat
+
+Nama = "Andika Dwi Pangestu"
+Alamat = "Jalan Pandjaitan No. 05"
+
+print('Nama :',nama,',alamat :',alamat )
+print('Nama :',Nama,',alamat :',Alamat )
+
+```
