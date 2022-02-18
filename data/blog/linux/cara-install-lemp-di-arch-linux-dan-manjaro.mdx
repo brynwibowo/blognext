@@ -1,0 +1,165 @@
+---
+title: 'Cara Instalasi LEMP Stack di Arch Linux dan Manjaro'
+date: '2022-02-18'
+lastmod: ''
+tags: ['linux', 'nginx', 'mariadb', 'php', 'arch', 'manjaro']
+draft: false
+summary: 'Konten ini berisi panduan langkah-langkah instalasi dan konfigurasi nginx, mariadb, php di
+  Arch linux dan Manjaro'
+bibliography: references-data.bib
+---
+
+BACA JUGA : [Install LAMP Stack di Ubuntu dan Linux Mint](https://brynwibowo.vercel.app/blog/linux/cara-install-apache-mysql-php-lamp-di-linux-mint-ubuntu)
+
+## Isi konten :
+
+<TOCInline toc={props.toc} exclude="Isi konten :" toHeading={2} />
+
+Tulisan ini berisi panduan instalasi dan konfigurasi LEMP di Arch linux dan Manjaro.
+LEMP (Linux, Nginx, MariaDB/MySQL dan PHP) digunakan untuk keperluan hosting website dan aplikasi atau
+bisa juga untuk testing website dan aplikasi di komputer lokal. Nginx (dibaca: Engine X) adalah web server yang
+memiliki performa tinggi dan stabil, nginx cukup populer dan banyak digunakan oleh server website dengan lalu lintas tinggi.
+MariaDB adalah basis data opensource turunan MySQL yang berfungsi sebagai penyimpanan data website dan aplikasi. PHP adalah bahasa
+pemrograman pada sisi server yang memungkinkan membuat website yang dinamis.
+
+Proses instalasi dilakukan sepenuhnya menggunakan terminal, buka terminal **Ctrl**+**Alt**+**T**
+
+## Upgrade Sistem
+
+Sebelum melakukan proses instalasi, upgrade sistem terlebih dahulu, gunakan perintah `pacman -Syu`
+
+```bash
+sudo pacman -Syu
+```
+
+## Install Nginx
+
+```bash
+sudo pacman -S nginx
+```
+
+setelah instalasi selesai, aktifkan layanan nginx
+
+```bash
+sudo systemctl enable nginx
+```
+
+jalankan nginx
+
+```bash
+sudo systemctl start nginx
+```
+
+lihat status nginx
+
+```bash
+sudo systemctl status nginx
+```
+
+buka localhost di browser/peramban
+
+![nginx](/static/images/nginx-status.png)
+
+## Install MariaDB
+
+```bash
+sudo pacman -S mariadb
+```
+
+setelah proses instalasi selesai, jalankan perintah berikut untuk inisialisasi direktori data MariaDB
+dan membuat tabel sistem
+
+```bash
+sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+```
+
+aktifkan layanan MariaDB
+
+```bash
+sudo systemctl enable mariadb
+```
+
+jalankan MariaDB
+
+```bash
+sudo systemctl start mariadb
+```
+
+masuk ke MariaDB
+
+```bash
+sudo mysql -u root
+```
+
+## Install PHP dan PHP-FPM
+
+```bash
+sudo pacman -S php php-fpm
+```
+
+setelah instalasi selesai, aktifkan layanan php-fpm
+
+```bash
+sudo systemctl start php-fpm
+```
+
+kemudian jalankan layanan php-fpm
+
+```bash
+sudo systemctl start php-fpm
+```
+
+konfigurasi nginx agar file ekstensi php dapat dibaca oleh web server,
+edit file konfigurasi `nginx.conf` dengan `nano`
+
+```bash
+sudo nano /etc/nginx/nginx.conf
+```
+
+tambahkan `index.php` pada baris index di dalam `location /`
+
+```bash:/etc/nginx/nginx.conf
+location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm index.php;
+        }
+```
+
+kemudian tambahkan skrip berikut
+
+```bash:/etc/nginx/nginx.conf
+location ~ \.php$ {
+fastcgi_pass   unix:/var/run/php-fpm/php-fpm.sock;
+fastcgi_index  index.php;
+root   /usr/share/nginx/html;
+include        fastcgi.conf;
+}
+```
+
+tekan **Ctrl**+**X** untuk keluar dan menyimpan konfigurasi `nginx.conf`
+
+![nginx.conf](/static/images/nginx-conf.png)
+
+restart nginx untuk menerapkan perubahan konfigurasi `nginx.conf`
+
+```bash
+sudo systemctl restart nginx
+```
+
+buat file `phpinfo.php` untuk melihat status php
+
+```bash
+nano /usr/share/nginx/html/phpinfo.php
+```
+
+tuliskan kode berikut
+
+```php
+<?php
+phpinfo();
+?>
+```
+
+simpan dan buka `localhost/phpinfo.php` di browser/peramban
+
+![phpinfo](/static/images/phpinfo.png)
