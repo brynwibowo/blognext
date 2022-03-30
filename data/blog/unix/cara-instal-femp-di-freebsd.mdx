@@ -1,0 +1,236 @@
+---
+title: 'Cara Instalasi FEMP Stack di FreeBSD'
+date: '2022-03-30'
+lastmod: ''
+tags: ['freebsd', 'nginx', 'mysql', 'php']
+draft: false
+summary: 'Konten ini berisi panduan langkah-langkah instalasi dan konfigurasi nginx, mysql, php di FreeBSD'
+bibliography: references-data.bib
+---
+
+BACA JUGA : [Install LEMP Stack di Arch Linux dan Manjaro](https://brynwibowo.vercel.app/blog/linux/cara-install-lemp-di-arch-linux-dan-manjaro)
+
+## Isi konten :
+
+<TOCInline toc={props.toc} exclude="Isi konten :" toHeading={2} />
+
+Tulisan ini berisi panduan instalasi dan konfigurasi FEMP Stack di FreeBSD.
+FEMP (FreeBSD, Nginx, MariaDB/MySQL dan PHP) digunakan untuk keperluan hosting website dan aplikasi atau
+bisa juga untuk testing website dan aplikasi di komputer lokal. Nginx (dibaca: Engine X) adalah web server yang
+memiliki performa tinggi dan stabil, nginx cukup populer dan banyak digunakan oleh server website dengan lalu lintas tinggi.
+MySQL adalah manajemen basis data yang berfungsi sebagai penyimpanan data website dan aplikasi. PHP adalah bahasa
+pemrograman pada sisi server yang memungkinkan membuat website yang dinamis.
+
+Proses instalasi dilakukan sepenuhnya menggunakan terminal, buka terminal **Ctrl**+**Alt**+**T**
+
+## Upgrade Sistem
+
+Sebelum melakukan proses instalasi, upgrade sistem terlebih dahulu, gunakan perintah `sudo freebsd-update fetch && freebsd-update install`
+
+```bash
+sudo freebsd-update fetch
+sudo freebsd-update install
+```
+
+## Install Nginx
+
+```bash
+sudo pkg install -y nginx
+```
+
+cek versi nginx
+
+```bash
+nginx -v
+```
+
+setelah instalasi selesai, aktifkan layanan nginx
+
+```bash
+sudo sysrc nginx_enable=yes
+```
+
+jalankan nginx
+
+```bash
+sudo service nginx start
+```
+
+lihat status nginx
+
+```bash
+sudo service nginx status
+```
+
+buka localhost di browser/peramban
+
+![nginx](/static/images/nginx-status.png)
+
+## Install MySQL
+
+```bash
+sudo pkg install -y mysql80-client mysql80-server
+```
+
+aktifkan layanan MySQL
+
+```bash
+sudo sysrc mysql_enable=yes
+```
+
+jalankan MySQL
+
+```bash
+sudo service mysql-server start
+```
+
+jalankan `mysql_secure_installation` untuk menambah keamanan MySQL, dan ikuti panduannya
+
+masuk ke MySQL
+
+```bash
+sudo mysql -u root -p
+```
+
+## Install PHP
+
+```bash
+sudo pkg install php74 php74-extensions php74-curl php74-zip php74-zlib
+```
+
+setelah instalasi selesai, copy `php.ini-production` sebagai `php.ini`
+
+```bash
+sudo cp /usr/local/etc/php.ini-production /usr/local/etc/php.ini
+```
+
+lakukan konfigurasi di `php.ini`
+
+```bash
+sudo nano /usr/local/etc/php.ini
+```
+
+hapus tanda semi-colon `;` pada `cgi.fix_pathinfo=0` lalu simpan
+
+aktifkan layanan php-fpm
+
+```bash
+sudo sysrc php_fpm_enable=yes
+```
+
+kemudian jalankan layanan php-fpm
+
+```bash
+sudo service php-fpm start
+```
+
+## Konfigurasi PHP-FPM
+
+Ada sedikit perubahan pada konfigurasi php-fpm pada file `/usr/local/etc/php-fpm.d/www.conf`,
+buka file dengan nano.
+
+```bash
+sudo nano /usr/local/etc/php-fpm.d/www.conf
+```
+
+berikan tanda semi-colon `;` di depan baris `listen = 127.0.0.1:9000` lalu tambahkan baris `listen = /var/run/php-fpm.sock` di bawahnya,
+kemudian akan menjadi seperti ini
+
+```bash
+;listen = 127.0.0.1:9000
+listen = /var/run/php-fpm.sock
+```
+
+hapus tanda semi-colon `;` juga pada baris berikut
+
+```bash
+listen.owner = www
+listen.group = www
+listen.mode = 0660
+```
+
+restart service php-fpm
+
+```bash
+sudo service php-fpm restart
+```
+
+## Konfigurasi Nginx
+
+konfigurasi nginx agar file ekstensi php dapat dibaca oleh web server,
+edit file konfigurasi `nginx.conf` dengan `nano`
+
+```bash
+sudo nano /usr/local/etc/nginx/nginx.conf
+```
+
+ubah script konfigurasi `nginx.conf` menjadi seperti berikut
+
+```bash:/usr/local/etc/nginx/nginx.conf
+user  www;
+worker_processes  1;
+error_log /var/log/nginx/error.log info;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    access_log /var/log/nginx/access.log;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    server {
+        listen       80;
+        server_name localhost; #sesuaikan nama servernya
+        root /usr/local/www/nginx; #sesuaikan direktori root webnya
+        index index.php index.html index.htm; # penambahan index.php
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+
+        error_page      500 502 503 504  /50x.html;
+        location = /50x.html {
+            root /usr/local/www/nginx-dist;
+        }
+
+        location ~ \.php$ {
+                try_files $uri =404;
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                fastcgi_pass unix:/var/run/php-fpm.sock;
+                fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME $request_filename;
+                include fastcgi_params;
+        }
+    }
+}
+```
+
+keluar dan simpan perubahan
+
+restart nginx untuk menerapkan perubahan konfigurasi `nginx.conf`
+
+```bash
+sudo service nginx restart
+```
+
+buat file `phpinfo.php` untuk melihat status php
+
+```bash
+nano /usr/local/www/nginx/phpinfo.php
+```
+
+tuliskan kode berikut
+
+```php
+<?php
+phpinfo();
+?>
+```
+
+simpan dan buka `localhost/phpinfo.php` di browser/peramban
