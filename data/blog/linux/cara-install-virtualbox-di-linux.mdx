@@ -1,0 +1,44 @@
+---
+title: 'Cara install VirtualBox di Linux'
+date: '2022-03-31'
+lastmod: ''
+tags: ['linux', 'virtualbox']
+draft: false
+summary: 'Konten ini berisi tutorial memasang VirtualBox di Linux'
+bibliography: references-data.bib
+---
+
+## Isi konten :
+
+<TOCInline toc={props.toc} exclude="Isi konten :" toHeading={2} />
+
+Tulisan ini berisi tutorial memasang Virtualbox di Linux untuk distro turunan Ubuntu dan Arch.
+Proses install VirtuaBox sepenuhnya menggunakan terminal, buka terminal `Ctrl`+`Alt`+`T`
+
+## Install VirtualBox di Ubuntu dan distro turunannya
+
+1. Update Sistem
+
+```bash
+sudo apt update
+```
+
+2. Install VirtualBox dan ekstensinya
+
+```bash
+sudo apt install virtualbox virtualbox-ext-pack
+```
+
+## Install VirtualBox di Arch Linux dan distro turunannya
+
+1. Update Sistem
+
+```bash
+sudo pacman -Syu
+```
+
+2. Install VirtualBox dan ekstensinya
+
+```bash
+sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso
+```

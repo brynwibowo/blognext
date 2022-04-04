@@ -1,0 +1,180 @@
+---
+title: 'Cara install FreeBSD'
+date: '2022-04-01'
+lastmod: ''
+tags: ['freebsd', 'virtualbox']
+draft: false
+summary: 'Konten ini berisi pedoman install FreeBSD di VirtualBox dan di PC/Laptop'
+bibliography: references-data.bib
+---
+
+## Isi konten :
+
+<TOCInline toc={props.toc} exclude="Isi konten :" toHeading={2} />
+
+Tulisan kali ini akan membahas cara install FreeBSD di VirtualBox dan di PC/Laptop.
+
+## Hal yang harus disiapkan
+
+1. File iso FreeBSD (jika install di VirtualBox)
+2. File image FreeBSD (jika install langsung di PC via boot USB)
+3. VirtualBox (jika install di Virtualbox)
+4. Flashdisk minimal 4Gb (jika install langsung di PC)
+5. Software Balena Etcher (jika install langsung di PC)
+6. Secangkir kopi
+
+## Iso/Image FreeBSD
+
+Download file iso FreeBSD (ekstensi .iso) jika install dengan VirtualBox, download file image FreeBSD (ekstensi .img)
+jika install FreeBSD langsung di PC/Laptop.
+Download iso/img FreeBSd [di sini](https://download.freebsd.org/releases/amd64/amd64/ISO-IMAGES/13.0/)
+
+## VirtualBox
+
+Step ini untuk install FreeBSD di VirtualBox, jika tidak lewati saja
+
+1. Baca [Cara install VirtualBox di Linux Ubuntu dan Arch](https://brynwibowo.vercel.app/blog/linux/cara-install-virtualbox-di-linux)
+2. Buka VirtualBox
+3. Buat Virtualisasi baru
+
+![newvirtual](/static/images/virtualbox/freebsd/0.png)
+
+4. Masuk ke Setting, pilih System kemudian urutkan Optical di urutan tertatas
+
+![opticaldisk](/static/images/virtualbox/freebsd/01.png)
+
+5. Pada Setting > Storage, pilih disk dan arahkan ke file iso FreeBSD yang sudah didownload.
+
+![newvirtual](/static/images/virtualbox/freebsd/1.png)
+
+6. Pada Setting > Network, centang **Enable Network Adapter** dan pilih **Bridged Adapter**
+
+![newvirtual](/static/images/virtualbox/freebsd/2.png)
+
+7. Klik **Ok**, kemudian klik **Start** untuk menjalankan FreeBSD virtualisasi.
+
+## USB Bootable
+
+Step ini untuk install FreeBSD langsung di PC/Laptop, jika tidak lewati saja
+
+1. Siapkan Flashdisk minimal 4Gb
+2. Download [balena etcher](https://www.balena.io/etcher/)
+3. Jalankan balena etcher
+
+![balenaetcher](/static/images/virtualbox/freebsd/02.png)
+
+4. Pilih file image FreeBSD, pilih target flashdisk, dan Flash!
+5. Restart PC/laptop, tekan Del/F2 untuk masuk ke BIOS, arahkan booting ke Flashdisk
+
+## Install FreeBSD
+
+1. Masuk ke booting FreeBSD, tekan enter untuk booting multi user
+
+![bootfreebsd](/static/images/virtualbox/freebsd/3.png)
+
+2. Tekan enter pada **Install**
+
+![freebsd](/static/images/virtualbox/freebsd/4.png)
+
+3. Tekan enter saja
+
+![freebsd](/static/images/virtualbox/freebsd/5.png)
+
+4. Ketik Hostname dan enter
+
+![freebsd](/static/images/virtualbox/freebsd/6.png)
+
+5. Uncheck **kernel-dbg** kemudian enter
+
+![freebsd](/static/images/virtualbox/freebsd/7.png)
+
+6. Untuk partisi disk pilih **Auto (ZFS)**,
+   **Warning** : Untuk install langsung di PC/Laptop pastikan data sudah dibackup
+   karena semua partisi akan dihapus yang otomatis semua data didalamnya akan hilang
+
+![freebsd](/static/images/virtualbox/freebsd/8.png)
+
+7. Enter saja
+
+![freebsd](/static/images/virtualbox/freebsd/9.png)
+
+![freebsd](/static/images/virtualbox/freebsd/10.png)
+
+8. Tandai di disk yang akan di install FreeBSD, jika install di PC/Laptop yang memiliki lebih dari satu disk
+   pastikan tandai di disk yang benar agar tidak kehilangan data (Misal ingin dual boot)
+
+![freebsd](/static/images/virtualbox/freebsd/11.png)
+
+9. Enter yes
+
+![freebsd](/static/images/virtualbox/freebsd/12.png)
+
+10. Proses Install
+
+![freebsd](/static/images/virtualbox/freebsd/13.png)
+
+11. Masukkan Password untuk user root
+
+![freebsd](/static/images/virtualbox/freebsd/14.png)
+
+12. Konfigurasi Network, pilih yes untuk konfigurasi IPv4, DHCP, dan pilih No untuk konfigurasi IPv6
+
+![freebsd](/static/images/virtualbox/freebsd/15.png)
+
+![freebsd](/static/images/virtualbox/freebsd/16.png)
+
+![freebsd](/static/images/virtualbox/freebsd/17.png)
+
+![freebsd](/static/images/virtualbox/freebsd/18.png)
+
+![freebsd](/static/images/virtualbox/freebsd/19.png)
+
+13. Pilih Region, Country, Zona, dan Tanggal/Waktu
+
+![freebsd](/static/images/virtualbox/freebsd/20.png)
+
+![freebsd](/static/images/virtualbox/freebsd/21.png)
+
+![freebsd](/static/images/virtualbox/freebsd/22.png)
+
+![freebsd](/static/images/virtualbox/freebsd/23.png)
+
+14. Tekan enter
+
+![freebsd](/static/images/virtualbox/freebsd/24.png)
+
+15. Tandai pada **disable_sendmail** dan enter
+
+![freebsd](/static/images/virtualbox/freebsd/25.png)
+
+16. Tambahkan user
+
+![freebsd](/static/images/virtualbox/freebsd/27.png)
+
+17. Isikan semua data user seperti berikut, OK? yes dan enter
+
+![freebsd](/static/images/virtualbox/freebsd/28.png)
+
+18. Enter pada pilihan No, lalu reboot
+
+![freebsd](/static/images/virtualbox/freebsd/29.png)
+
+![freebsd](/static/images/virtualbox/freebsd/30.png)
+
+19. Jika masuk lagi ke live CD FreeBSD, atur Boot Order Hardisk diurutan paling atas
+
+![freebsd](/static/images/virtualbox/freebsd/31.png)
+
+20. Booting ke FreeBSD dan login root
+
+![freebsd](/static/images/virtualbox/freebsd/32.png)
+
+21. update FreeBSD dengan perintah `freebsd-update fetch` dan `freebsd-update install`
+
+![freebsd](/static/images/virtualbox/freebsd/33.png)
+
+untuk keluar tekan `q`
+
+![freebsd](/static/images/virtualbox/freebsd/34.png)
+
+![freebsd](/static/images/virtualbox/freebsd/35.png)
