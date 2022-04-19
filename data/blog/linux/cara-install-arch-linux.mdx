@@ -1,0 +1,323 @@
+---
+title: 'Cara install Arch Linux'
+date: '2022-04-14'
+lastmod: ''
+tags: ['arch', 'linux', 'virtualbox']
+draft: false
+summary: 'Konten ini berisi pedoman install Arch Linux di VirtualBox dan di PC/Laptop'
+bibliography: references-data.bib
+---
+
+## Isi konten :
+
+<TOCInline toc={props.toc} exclude="Isi konten :" toHeading={2} />
+
+Arch Linux adalah distribusi Linux yang simpel dan ringan. Arch linux tidak seperti distro linux lainnya yang
+sudah menyertakan DE (Desktop Environment) saat proses menginstalnya, jadi proses install Arch Linux cukup menantang bagi yang ingin belajar Linux.
+Tulisan kali ini akan membahas cara install Arch Linux step by step agar mudah dipahami terutama untuk yang ingin bermigrasi
+dari distro Ubuntu/Mint ke Arch Linux.
+
+## Hal yang harus disiapkan
+
+1. File iso Arch Linux
+2. VirtualBox (jika install di Virtualbox)
+3. Flashdisk minimal 4Gb (jika install langsung di PC)
+4. Software Balena Etcher (jika install langsung di PC)
+5. Secangkir kopi
+
+## Iso Arch Linux
+
+Download iso Arch Linux [di sini](https://archlinux.org/download/)
+
+## VirtualBox
+
+Step ini untuk install Arch Linux di VirtualBox, jika tidak lewati saja
+
+1. Baca [Cara install VirtualBox di Linux Ubuntu dan Arch](/blog/linux/cara-install-virtualbox-di-linux)
+2. Buka VirtualBox
+3. Buat Virtualisasi baru
+
+![newvirtual](/static/images/virtualbox/arch/1.png)
+
+4. Masuk ke Setting, pilih System kemudian urutkan Optical di urutan teratas, centang Enable I/O
+
+![opticaldisk](/static/images/virtualbox/arch/3.png)
+
+centang Enable EFI jika ingin install Arch mode UEFI
+
+5. Pada Setting > Storage, pilih disk dan arahkan ke file iso Arch Linux yang sudah didownload.
+
+![newvirtual](/static/images/virtualbox/arch/5.png)
+
+6. Pada Setting > Network, centang **Enable Network Adapter** dan pilih **Bridged Adapter**
+
+7. Klik **Ok**, kemudian klik **Start** untuk menjalankan Arch Linux.
+
+## USB Bootable
+
+Step ini untuk install Arch Linux langsung di PC/Laptop, jika tidak lewati saja
+
+1. Siapkan Flashdisk minimal 4Gb
+2. Download [balena etcher](https://www.balena.io/etcher/)
+3. Jalankan balena etcher
+
+![balenaetcher](/static/images/virtualbox/freebsd/02.png)
+
+4. Pilih file iso Arch Linux, pilih target flashdisk, dan Flash!
+5. Restart PC/laptop, tekan Del/F2 untuk masuk ke BIOS, arahkan booting ke Flashdisk
+
+## Install Arch Linux
+
+1. Masuk ke booting Arch Linux, langsung tekan enter saja
+
+![bootarch](/static/images/virtualbox/arch/6.png)
+
+2. Cek koneksi internet `ping google.com`
+
+![bootarch](/static/images/virtualbox/arch/7.png)
+
+update waktu sistem via internet
+
+```bash
+timedatectl set-ntp true
+```
+
+3. Cek disk yang tersedia `fdisk -l`
+
+![bootarch](/static/images/virtualbox/arch/8.png)
+
+membuat partisi baru dengan perintah `cfdisk [disk]`, misal `cfdisk /dev/sda` sesuaikan disk dengan disk yang ingin diinstal Arch Linux.
+
+4. Pilih tipe `gpt` jika ingin install pada mode UEFI, `dos` jika mode BIOS Legacy
+
+![bootarch](/static/images/virtualbox/arch/9.png)
+
+5. Pilih `New` untuk membuat partisi baru
+
+![bootarch](/static/images/virtualbox/arch/10.png)
+
+Jika install mode UEFI, partisi pertama 512MB untuk UEFI dengan type partisi `EFI System`
+
+![bootarch](/static/images/virtualbox/arch/12.png)
+
+6. Buat partisi Swap, dan Linux
+
+![bootarch](/static/images/virtualbox/arch/13.png)
+
+Besarnya partisi swap sesuaikan dengan kebutuhan, banyak yang memakai rumus swap = RAM x 2 tapi tidak harus seperti ini.
+Partisi Linux bisa lebih dari satu partisi misal ingin memisah partisi `/root` dengan partisi `/home`, pada partisi
+yang dijadikan root piliih Bootable.
+
+7. Pilih `Write` untuk menerapkan semua perubahan partisi, jalankan `fdisk -l` untuk melihat hasilnya
+
+![bootarch](/static/images/virtualbox/arch/14.png)
+
+gambar diatas hanya contoh saja, bisa jadi jumlah partisinya berbeda dengan punya kalian jika ada partisi untuk `/boot/efi` dan partisi `/home` yang dipisah dengan `/root`.
+
+8. Format Partisi
+
+   a. Partisi EFI/UEFI
+
+   ```bash
+   mkfs.fat -F 32 /dev/[partisi sistem efi]
+   ```
+
+   sesuaikan partisi sistem EFI/UEFI dengan partisi yang sudah dibuat, misal `/dev/sda1`.
+
+   b. Partisi Linux
+
+   ```bash
+   mkfs.ext4 /dev/[partisi linux]
+   ```
+
+   jika ada dua partisi linux misal partisi `/root` dan `/home` maka format kedua partisi.
+
+   ```bash
+   mkfs.ext4 /dev/sda2
+   mkfs.ext4 /dev/sda3
+   ```
+
+   partisi yang diformat harus sesuai dengan desain partisi di awal.
+
+   c. Partisi Swap
+
+   ```bash
+   mkswap /dev/[partisi swap]
+
+   ```
+
+9. Mount Partisi
+
+   a. Partisi EFI
+
+   ```bash
+   mount --mkdir /dev/[partisi EFI] /mnt/boot/efi
+   ```
+
+   b. Partisi Root/File System
+
+   ```bash
+   mount /dev/[partisi root] /mnt
+   ```
+
+   Jika ada partisi `/home` mount partisi home
+
+   ```bash
+   mount --mkdir /dev/[partisi home] /mnt/home
+   ```
+
+   c. Mengaktifkan Swap
+
+   ```bash
+   swapon /dev/[partisi swap]
+   ```
+
+10. Cek Mirror List
+
+```bash
+pacman -Syy
+```
+
+10. Install Arch Linux
+
+```bash
+pacstrap /mnt base linux linux-firmware dhcpcd nano
+```
+
+![bootarch](/static/images/virtualbox/arch/16.png)
+
+11. Konfigurasi Arch Linux
+
+    a. Membuat `fstab`
+
+    ```bash
+    genfstab -U /mnt >> /mnt/etc/fstab
+    ```
+
+    cek fstab
+
+    ```bash
+    cat /mnt/etc/fstab
+    ```
+
+    ![bootarch](/static/images/virtualbox/arch/17.png)
+
+    b. Mount disk sebagai root dengan Arch-Chroot
+
+    ```bash
+    arch-chroot /mnt
+    ```
+
+    c. Setting Zona Waktu
+
+    ```bash
+    timedatectl list-timezones
+    ```
+
+    cari zona waktu yang sesuai, misal `Asia/Jakarta`.
+
+    jalankan perintah `timedatectl set-timezone Asia/Jakarta` enter.
+
+    d. Setting Lokal
+
+    Edit `/etc/locale.gen` dengan nano `nano /etc/locale.gen`
+
+    ![bootarch](/static/images/virtualbox/arch/19.png)
+
+    hapus comment atau tanda `#` pada local yang sesuai, misal Indonesia dengan kode `id_ID` kemudian exit dan simpan.
+
+    Untuk menerapkan konfigurasi locale.gen jalankan perintah `locale-gen`.
+
+12. Membuat Hostname
+
+```bash
+echo bryn-archlinux > /etc/Hostname
+```
+
+sesuaikan nama hostname dengan hostname kalian.
+
+kemudian konfiguras hosts `touch /etc/hosts`
+
+```bash
+127.0.0.1	localhost
+::1 		localhost
+127.0.1.1	bryn-archlinux
+```
+
+13. Aktifkan dhcpcd
+
+```bash
+systemctl enable dhcpcd
+```
+
+14. Membuat password root
+
+```bash
+passwd
+```
+
+jalankan, kemudian masukkan password dan konfirmasi password.
+
+15. Install GRUB
+
+Pilih salah satu metode install GRUB sesuai dengan desain di awal.
+
+    1. Boot Mode Legacy/Non-UEFI System
+
+        a. Install paket GRUB dengan pacman
+
+        ```bash
+        pacman -S grub os-prober
+        ```
+
+        b. Install GRUB bootloader
+
+        ```bash
+        grub-install /dev/sda
+        ```
+
+        sesuaikan dengan disk yang akan diinstall GRUB.
+
+        c. Membuat konfigurasi GRUB, jalankan perintah berikut
+
+        ```bash
+        grub-mkconfig -o /boot/grub/grub.cfg
+        ```
+
+    2. Boot Mode EFI/UEFI
+
+        a. Install paket GRUB dengan pacman
+
+        ```bash
+        pacman -S grub efibootmgr
+        ```
+
+        b. Install GRUB
+
+        ```bash
+        grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi
+        ```
+
+        c. Membuat konfigurasi GRUB
+
+        ```bash
+        grub-mkconfig -o /boot/grub/grub.cfg
+        ```
+
+16. Final Step
+
+Keluar dari **arch-chroot**
+
+```bash
+exit
+```
+
+kemudian reboot
+
+```bash
+reboot
+```
+
+![bootarch](/static/images/virtualbox/arch/23.png)
+
+Selamat !! Arch Linux sekarang sudah terinstall. Sumber [Arch Linux](https://wiki.archlinux.org/title/installation_guide), [PhoenixNAP](https://phoenixnap.com/kb/arch-linux-install)
