@@ -1,0 +1,88 @@
+---
+title: 'Cara Remote Git dengan SSH'
+date: '2022-04-20'
+lastmod: ''
+tags: ['git', 'ssh', 'openssh']
+draft: false
+summary: 'Berikut akan dijelaskan bagaimana cara clone,remote,pull repository git dengan ssh/openssh'
+bibliography: references-data.bib
+---
+
+## Isi konten :
+
+<TOCInline toc={props.toc} exclude="Isi konten :" toHeading={2} />
+
+## Install Git
+
+1. Debian/Ubuntu based
+
+```bash
+sudo apt update
+sudo apt install git
+```
+
+2. Arch/Manjaro based
+
+```bash
+sudo pacman -Syu git
+```
+
+3. FreeBSD
+
+```bash
+sudo pkg update
+sudo pkg install git
+```
+
+3. Cek Git Version
+
+```bash
+git --version
+```
+
+## Membuat ssh private dan public key
+
+Buka terminal, jalankan
+
+```bash
+ssh-keygen
+```
+
+secara default public/private key dibuat di `~/.ssh/id_rsa`, jika file sudah tersedia bisa buat dengan nama file lain.
+isi passphrase atau bisa dikosongkan saja langsung enter.
+
+![gitssh](/static/images/git/1.png)
+
+## Login ke Website Github
+
+Login ke Github, masuk ke Setting > SSH and GPG keys > New SSH key
+
+![gitssh](/static/images/git/2.png)
+
+Isi Title, copy isi file '~/.ssh/id_rsa.pub` atau public key yang tadi sudah dibuat kemudian klik Add SSH Key.
+
+![gitssh](/static/images/git/3.png)
+
+buka terminal, coba test ssh ke github `ssh -T git@github.com`
+
+![gitssh](/static/images/git/4.png)
+
+Test clone repository
+
+![gitssh](/static/images/git/5.png)
+
+Masuk ke repository yang sudah di clone, remote repository dengan perintah
+
+```bash
+git remote set-url origin git@github.com:username/repository.git
+```
+
+![gitssh](/static/images/git/6.png)
+
+Cek status remote git `git remote -v`
+
+![gitssh](/static/images/git/8.png)
+
+Test git pull
+
+![gitssh](/static/images/git/7.png)
