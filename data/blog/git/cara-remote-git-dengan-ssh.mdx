@@ -4,7 +4,7 @@ date: '2022-04-20'
 lastmod: ''
 tags: ['git', 'ssh', 'openssh']
 draft: false
-summary: 'Berikut akan dijelaskan bagaimana cara clone,remote,pull repository git dengan ssh/openssh'
+summary: 'Berikut akan dijelaskan bagaimana cara clone,remote,pull,push repository git dengan ssh/openssh'
 bibliography: references-data.bib
 ---
 
@@ -69,6 +69,10 @@ buka terminal, coba test ssh ke github `ssh -T git@github.com`
 
 Test clone repository
 
+```bash
+git clone git@github.com:username/repository.git
+```
+
 ![gitssh](/static/images/git/5.png)
 
 Masuk ke repository yang sudah di clone, remote repository dengan perintah
@@ -83,11 +87,11 @@ Cek status remote git `git remote -v`
 
 ![gitssh](/static/images/git/8.png)
 
-Test git pull
+Test `git pull`
 
 ![gitssh](/static/images/git/7.png)
 
-Test git push
+Test `git push`
 
 ![gitssh](/static/images/git/9.png)
 
