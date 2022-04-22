@@ -1,0 +1,61 @@
+---
+title: 'Cara Mengatasi Remote Github SSH Permission Denied'
+date: '2022-04-22'
+lastmod: ''
+tags: ['github', 'ssh', 'openssh']
+draft: false
+summary: 'Permission denied atau akses ditolak saat remote git dengan ssh sering terjadi, berikut akan dijelaskan bagaimana mengatasinya'
+bibliography: references-data.bib
+---
+
+Saat pertama mencoba remote git dengan ssh Saya menemukan masalah ini, ternyata penyebabnya karena private key tidak menggunakan nama default
+`id_rsa` karena saat itu private key `id_rsa` sudah digunakan untuk remote VPS jadi untuk remote git Saya membuat public/private key baru dengan nama lain.
+
+![gitssh](/static/images/git/permission/1.png)
+
+Bagaimana agar private key bisa terdeteksi? Nah ini yang akan kita bahas, pertama test debug ssh ke github
+
+```bash
+ssh -vT git@github.com
+```
+
+![gitssh](/static/images/git/permission/3.png)
+
+SSH mencoba mencari private key yang cocok dengan public key github tapi private key `bryngit` tidak terdeteksi, untuk masalah
+seperti ini kita akan selesaikan dengan menjalankan perintah berikut di terminal.
+
+```bash
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/bryngit
+```
+
+![gitssh](/static/images/git/permission/4.png)
+
+Coba test koneksi ssh ke github
+
+```bash
+ssh -T git@github.com
+```
+
+![gitssh](/static/images/git/permission/5.png)
+
+Sekarang ssh sudah bisa terkoneksi ke github tapi ini hanya untuk sementara, bagaimana agar bisa koneksi ke github secara permanen?
+Sekarang buat file config di `~/.ssh/config`
+
+```bash
+nano ~/.ssh/config
+```
+
+kemudian isikan baris perintah berikut
+
+![gitssh](/static/images/git/permission/6.png)
+
+Sesuaikan nama private key dengan private key kalian, tekan **Ctrl**+**X** dan simpan
+
+buat permission 600 untuk file config `~/.ssh/config`
+
+```bash
+sudo chmod 600 ~/.ssh/config
+```
+
+Semoga berhasil !
