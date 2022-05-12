@@ -1,0 +1,154 @@
+---
+title: 'Cara Install OpenVPN di VPS Ubuntu'
+date: '2022-05-12'
+tags: ['linux', 'VPN', 'OpenVPN', 'VPS', 'ubuntu']
+draft: false
+summary: 'Berikut akan dijelaskan cara instal openvpn dengan mudah dan cepat di vps ubuntu'
+bibliography: references-data.bib
+---
+
+## Isi konten :
+
+<TOCInline toc={props.toc} exclude="Isi konten :" toHeading={2} />
+
+Sebelum kelangkah pertama buka terminal dahulu **Ctrl**+**Alt**+**T**
+
+## Langkah-1: Remote VPS Ubuntu via SSH
+
+```bash
+ssh user@ip-public-vps
+```
+
+![openvpn](/static/images/openvpn/1.png)
+
+Masukkan passphrase jika ada
+
+## Langkah-2: Update dan Upgrade Sistem
+
+```bash
+sudo apt update && sudo apt -y upgrade
+```
+
+## Langkah-3: Download openvpn-install.sh dengan wget
+
+```bash
+wget https://git.io/vpn -O openvpn-install.sh
+```
+
+setelah itu cek hasil download dengan perintah `ls`
+
+![openvpn](/static/images/openvpn/4.png)
+
+## Langkah-4: Jalankan openvpn-install.sh
+
+Sebelum menjalankan openvpn-install.sh, buat file ini menjadi _executable_
+
+```bash
+sudo chmod +x openvpn-install.sh
+```
+
+baru jalankan
+
+```bash
+sudo bash openvpn-install.sh
+```
+
+![openvpn](/static/images/openvpn/5.png)
+
+## Langkah-5: Install OpenVPN
+
+Setelah menjalankan openvpn-install.sh akan muncul input dialog untuk install openvpn,
+untuk protocol pilih 1 (UDP), port pilih default 1194, DNS server pilih 2 untuk Google.
+
+![openvpn](/static/images/openvpn/6.png)
+
+kemudian masukkan nama untuk client vpn pertama dan enter, proses instalasi akan berjalan otomatis.
+
+![openvpn](/static/images/openvpn/7.png)
+
+![openvpn](/static/images/openvpn/8.png)
+
+selanjutnya cek status service openvpn
+
+```bash
+sudo systemctl status openvpn-server@server.service
+```
+
+![openvpn](/static/images/openvpn/16.png)
+
+untuk stop service openvpn
+
+```bash
+sudo systemctl stop openvpn-server@server.service
+```
+
+untuk start service openvpn
+
+```bash
+sudo systemctl start openvpn-server@server.service
+```
+
+untuk restart service openvpn
+
+```bash
+sudo systemctl restart openvpn-server@server.service
+```
+
+## Langkah-6: Install openvpn di client
+
+Masih remote vps ubuntu, cari file konfigurasi openvpn client dengan ekstensi `.ovpn`
+
+```bash
+sudo find / -type f -name "*.ovpn"
+```
+
+karena akses root saya terbatas, file ovpn saya copy ke direktori home
+
+![openvpn](/static/images/openvpn/9.png)
+
+kemudian buka terminal baru di komputer lokal, copy file ovpn tadi dengan perintah scp
+
+```bash
+scp user@ip-public-vps:/lokasi-file-ovpn /lokasi-penyimpanan-ovpn-di-komputer-lokal
+```
+
+![openvpn](/static/images/openvpn/10.png)
+
+tanda titik `.` maksudnya adalah file ovpn yang dicopy dari vps ke dalam direktori saat ini yaitu direktori home.
+
+selanjutnya buka network manager, pilih Import VPN connection
+
+![openvpn](/static/images/openvpn/11.png)
+
+klik create kemudian cari dan pilih file ovpn yang sudah dicopy dari vps tadi.
+
+![openvpn](/static/images/openvpn/12.png)
+
+coba koneksikan openvpn
+
+![openvpn](/static/images/openvpn/13.png)
+
+cek dengan `ifconfig` diterminal, perhatikan pada `tun0`
+
+![openvpn](/static/images/openvpn/14.png)
+
+openvpn menggunakan ip `10.8.0.1` sebagai ip server dan `10.8.0.2-dst` sebagai ip vpn client.
+
+buka google, ketik `what's my ip address` untuk mengetahui ip public openvpn.
+
+## Langkah-7 : Menambah client baru OpenVPN
+
+buka terminal yang menjalankan remote vps, kemudian jalankan kembali openvpn-install.sh
+
+```bash
+sudo bash openvpn-install.sh
+```
+
+![openvpn](/static/images/openvpn/15.png)
+
+ketik satu `1` dan enter untuk menambah client baru, kemudian masukkan nama client dan enter.
+
+## Kesimpulan
+
+Menginstall OpenVPN dengan openvpn-install.sh cukup mudah hanya dengan beberapa langkah saja, untuk menambahkan
+client baru juga cukup mudah, openvpn adalah vpn yang cukup aman untuk digunakan.
