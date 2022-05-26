@@ -1,12 +1,12 @@
 const siteMetadata = {
-  title: 'brynblog',
-  author: 'bryn wibowo',
-  headerTitle: 'brynblog',
-  description: 'code, linux, and opensource',
+  title: 'brynwibowo',
+  author: 'bryan wibowo',
+  headerTitle: 'brynwibowo',
+  description: 'Linux, Unix and Open Source Software ',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://brynblog.vercel.app',
-  siteRepo: 'https://github.com/brynwibowo/blognextjs',
+  siteUrl: 'https://brynwibowo.vercel.app',
+  siteRepo: 'https://github.com/brynwibowo/blognext',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter-card.png',

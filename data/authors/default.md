@@ -1,5 +1,5 @@
 ---
-name: Bryn Wibowo
+name: Bryan Wibowo
 avatar: /static/images/avatar.png
 occupation: ''
 company: ''
