@@ -16,13 +16,13 @@ _responsive_ dan _secure_, saya juga dapat melakukan tugas sebagai Linux/Unix sy
 
 ## Projects
 
-- **Steganography**
+- [**Steganography**](https://github.com/brynwibowo/stegano-lsb)
 
   Keamanan data dengan metode mengganti bit-bit tidak signifikan pada citra dengan bit-bit data teks.
 
-- **CMS**
+- [**Larablog**](https://github.com/brynwibowo/larablog)
 
-  Konten manajemen untuk website sekolah atau organisasi dengan framework laravel.
+  Konten manajemen untuk website pesantren atau sekolah dengan framework laravel.
 
 ## Skills
 
