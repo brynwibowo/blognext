@@ -1,0 +1,185 @@
+---
+title: 'Konfigurasi Firewall dengan FirewallD di RHEL/Rocky/Alma Linux'
+date: '2023-01-04'
+tags: ['linux', 'firewalld', 'server']
+draft: false
+summary: 'Cara konfigurasi firewalld di RHEL/Rocky/Alma Linux lengkap dan mudah dipahami'
+bibliography: references-data.bib
+---
+
+## Isi konten :
+
+<TOCInline toc={props.toc} exclude="Isi konten :" toHeading={2} />
+
+Firewall digunakan untuk melindungi komputer/server dari lalu lintas yang tidak diinginkan,
+sedangkan FirewallD sebuah konsep manajemen sederhana yang mengatur lalu lintas jaringan.
+
+Proses konfigurasi dilakukan sepenuhnya menggunakan terminal, buka terminal **Ctrl**+**Alt**+**T**
+
+## Memahami daftar zona pada FirewallD
+
+1. **Melihat daftar zona**
+
+```bash
+firewall-cmd --get-zones
+```
+
+hasil output :
+
+![firewalld-zones](/static/images/linux/firewalld-1.png)
+
+    * Zona __block__ menolak semua koneksi jaringan yang masuk.
+    * Zona __dmz__ _Classic demilitarized zone (DMZ)_ menyediakan akses yang terbatas dan hanya mengizinkan koneksi melalui port yang dipilih.
+    * Zona __drop__ memutuskan semua koneksi jaringan yang masuk, dan hanya koneksi jaringan keluar yang diizinkan.
+    * Zona __external__ sangat berguna untuk jenis koneksi router.
+    * Zona __home__ disarankan untuk komputer/laptop pengguna pribadi/rumahan, zona ini dapat memilih TCP/IP Port yang diijinkan.
+    * Zona __internal__ digunakan pada jaringan lokal LAN dimana komputer/server lain yang terhubung dapat dipercaya.
+    * Zona __nm-shared__ digunakan pada mode sharing/berbagi.
+    * Zona __public__ tidak memberikan kepercayaan pada semua komputer/server dalam jaringan, hanya port dan layanan yang dipilih yang diijinkan,
+    zona ini disarankan untuk server yang terhubung dengan internet atau memiliki IP public.
+    * Zona __trusted__ mengijinkan semua koneksi yang masuk dan keluar, zona ini sangat tidak disarankan untuk public server.
+    * Zona __work__ digunakan di area tempat kerja yang mempercayai komputer/server lain dalam jaringan.
+
+2. **Melihat zona yang sedang diterapkan**
+
+```bash
+firewall-cmd --get-default-zone
+```
+
+3. **Menentukan Zona yang akan diterapkan**
+
+Misal akan mengubah default zona ke **internal**
+
+```bash
+sudo firewall-cmd --set-default-zone=internal
+```
+
+## Mengatur Rule FirewallD
+
+1. **Melihat daftar rule pada firewall**
+
+untuk semua zona
+
+```bash
+sudo firewall-cmd --list-all-zones
+```
+
+jika ingin spesifik di zona tertentu, misal zona public
+
+```bash
+sudo firewall-cmd --list-all --zone=public
+```
+
+output
+
+![list-in-zone](/static/images/linux/firewalld-2.png)
+
+2. **Melihat layanan yang diizinkan**
+
+```bash
+sudo firewall-cmd --list-services
+```
+
+atau berdasarkan zona
+
+```bash
+sudo firewall-cmd --list-services --zone=public
+```
+
+3. **Menambahkan layanan yang diizinkan**
+
+```bash
+sudo firewall-cmd --add-service=mysql
+```
+
+izinkan layanan secara permanen
+
+```bash
+sudo firewall-cmd --add-service=mysql --permanent
+```
+
+reload firewalld setelah menambahkan layanan
+
+```bash
+sudo firewall-cmd --reload
+```
+
+4. **Menghapus layanan yang diizinkan**
+
+```bash
+sudo firewall-cmd --zone=public --remove-service=mysql
+```
+
+5. **Menambahkan TCP/UDP Port**
+
+```bash
+sudo firewall-cmd --zone=internal --add-port=80/tcp --permanent
+```
+
+6. **Melihat daftar TCP/UDP port**
+
+```bash
+sudo firewall-cmd --zone=internal --list-ports
+```
+
+7. **Menghapus TCP/UDP Port**
+
+```bash
+sudo firewall-cmd --zone=public --remove-port=80/tcp --permanent
+```
+
+8. **Menambahkan sources/IP**
+
+```bash
+sudo firewall-cmd --zone=internal --add-source=192.168.0.0/24 --permanent
+```
+
+atau IP spesifik
+
+```bash
+sudo firewall-cmd --zone=internal --add-source=192.168.2.100 --permanent
+```
+
+9. **Melihat daftar sources/IP**
+
+```bash
+sudo firewall-cmd --list-sources --zone=internal
+```
+
+10. **Menghapus sources/IP**
+
+```bash
+sudo firewall-cmd --zone=internal --remove-source=192.168.2.100 --permanent
+```
+
+## Start, Stop, dan Restart FirewallD dengan Systemctl
+
+1. **Menjalankan FirewallD**
+
+```bash
+sudo systemctl start firewalld
+```
+
+agar firewalld otomatis berjalan saat komputer/server dinyalakan
+
+```bash
+sudo systemctl enable firewalld
+```
+
+2. **Menghentikan FirewallD**
+
+```bash
+sudo systemctl stop firewalld
+```
+
+menghentikan firewalld berjalan otomatis saat komputer/server dinyalakan
+
+```bash
+sudo systemctl disable firewalld
+```
+
+3. **Menjalankan ulang FirewallD**
+
+```bash
+sudo systemctl restart firewalld
+```
