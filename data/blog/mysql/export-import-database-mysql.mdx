@@ -1,0 +1,48 @@
+---
+title: 'Export Import Database MySQL'
+date: '2023-02-27'
+tags: ['SQL', 'MySQL', 'Export', 'Import']
+draft: false
+summary: 'Cara Export dan Import database MySQL dengan command mysql di terminal'
+bibliography: references-data.bib
+---
+
+Pertama buka terminal **Ctrl**+**Alt**+**T**
+
+## Export Database
+
+```bash
+mysqldump --routines -u [username] -p [database-name] > [file-hasil-export.sql]
+```
+
+contohnya
+
+```bash
+mysqldump --routines -u bryn -p employee_db > employee_db.sql
+```
+
+jika menggunakan user `root` gunakan `sudo`
+
+```bash
+sudo mysqldump --routines -u root -p employee_db > employee_db.sql
+```
+
+## Import Database
+
+Sebelum import database, pastikan database baru sudah dibuat
+
+```bash
+mysql -u [username] -p [database-name] < [file-backup-database.sql]
+```
+
+contohnya
+
+```bash
+mysql -u bryn -p products_db < backup-products_db.sql
+```
+
+jika menggunakan user `root` gunakan `sudo`
+
+```bash
+sudo mysql -u root -p products_db < backup-products_db.sql
+```
