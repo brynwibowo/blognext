@@ -1,0 +1,34 @@
+---
+title: 'Transfer File Via SSH'
+date: '2023-02-27'
+tags: ['ssh']
+draft: false
+summary: 'Cara mengirim file dari komputer/laptop ke server atau dari server ke komputer/laptop via SSH'
+bibliography: references-data.bib
+---
+
+Pertama buka terminal **Ctrl**+**Alt**+**T**
+
+## Transfer File dari Komputer/Laptop ke Server
+
+```bash
+scp [/dir/source/myFile] [user]@[domain/ip]:[/dir/destination/toFile]
+```
+
+contohnya
+
+```bash
+scp ~/Documents/projects.zip bryn@192.168.1.100:~/Documents/
+```
+
+## Transfer File dari Server ke Komputer/Laptop
+
+```bash
+scp [user]@[domain/ip]:[/dir/source/file] [/dir/destination/file]
+```
+
+contohnya
+
+```bash
+scp bryn@192.168.1.100:~/Documents/backup.zip ~/Documents/
+```
