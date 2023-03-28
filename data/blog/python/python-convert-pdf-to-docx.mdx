@@ -1,0 +1,51 @@
+---
+title: 'Python : Convert PDF to Docx with pdf2docx'
+date: '2023-03-28'
+tags: ['python', 'pdf2docx']
+draft: false
+summary: 'Konversi file pdf menjadi file docx dengan python'
+bibliography: references-data.bib
+---
+
+## Install pdf2docx
+
+```bash
+pip install pdf2docx
+```
+
+![install pdf2docx](/static/images/python/install-pdf2docx.png)
+
+## Code
+
+1. Buat file python, misal dengan nama file `convertpdf2docx.py`
+
+```python:convertpdf2docx.py
+from pdf2docx import Converter
+pdf_file = 'samplefile.pdf'
+docx_file = 'samplefile.docx'
+cv = Converter(pdf_file)
+cv.convert(docx_file)
+cv.close()
+```
+
+2. Tentukan file PDF yang akan dikonversi, misalkan file `samplefile.pdf`
+
+![file pdf](/static/images/python/filepdf.png)
+
+![file pdfopen](/static/images/python/filepdfopen.png)
+
+nama file harus sama dengan value pada variabel `pdf_file` pada code di atas
+
+## Eksekusi Code
+
+```bash
+python3 convertpdf2docx.py
+```
+
+![eksekusi code](/static/images/python/execute-code-pdf2docx.png)
+
+lihat file hasil Konversi
+
+![file docx](/static/images/python/filedocx.png)
+
+![file docxopen](/static/images/python/filedocxopen.png)
