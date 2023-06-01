@@ -1,0 +1,57 @@
+---
+title: 'Python : Deret Angka Fibonacci'
+date: '2023-06-01'
+tags: ['python', 'fibonacci']
+draft: false
+summary: 'Membuat deret angka fibonacci dengan perulangan for dan fungsi rekrusif'
+bibliography: references-data.bib
+---
+
+## Membuat deret angka fibonacci dengan perulangan for
+
+```python:fibonacci-for.py
+#Logika fibonaci dengan perulangan for
+deret = int(input("masukkan jumlah deret fibonaci : "))
+fibo = [0,1]
+
+for a in range(2,deret):
+	j = fibo[a - 2]
+	k = fibo[a - 1]
+	fibo.append(j + k)
+
+for b in range(2,deret+1):
+	for c in range(b):
+		print(fibo[c],end=' ')
+	print('\n',end='')
+
+```
+
+jalankan program
+
+![fibonacci for](/static/images/python/fibo-for.png)
+
+## Membuat deret angka fibonacci dengan fungsi rekrusif
+
+```python:fibonacci-rekrusif.py
+#logika fibonaci dengan fungsi rekrusif
+
+i = int(input("Masukkan jumlah deret fibonaci: "))
+f = [0,1]
+
+def fibo(batas,x=2):
+	if x < batas:
+		i = f[x - 2]
+		j = f[x - 1]
+		f.append(i + j)
+		fibo(batas,x+1)
+fibo(i)
+for k in range(2,i+1):
+	for l in range(k):
+		print(f[l],end=' ')
+	print('\n',end='')
+
+```
+
+jalankan program
+
+![fibonacci for](/static/images/python/fibo-rekrusif.png)
