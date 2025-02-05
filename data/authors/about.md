@@ -4,7 +4,7 @@ avatar: /static/images/avatar.png
 occupation: 'Full-Stack Developer & Linux/Unix System Administrator'
 company: ''
 email: 'brynwibowo@yahoo.com'
-twitter: https://twitter.com/brynwibowo
+twitter: https://x.com/brynwibowo
 linkedin: ''
 github: https://github.com/brynwibowo
 ---

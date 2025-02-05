@@ -4,7 +4,7 @@ avatar: /static/images/avatar.png
 occupation: ''
 company: ''
 email: ''
-twitter: https://twitter.com/brynwibowo
+twitter: https://x.com/brynwibowo
 linkedin: ''
 github: https://github.com/brynwibowo
 ---

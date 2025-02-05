@@ -12,7 +12,7 @@ const siteMetadata = {
   socialBanner: '/static/images/twitter-card.png',
   email: '',
   github: 'https://github.com/brynwibowo',
-  twitter: 'https://twitter.com/brynwibowo',
+  twitter: 'https://x.com/brynwibowo',
   facebook: '',
   youtube: '',
   linkedin: '',
