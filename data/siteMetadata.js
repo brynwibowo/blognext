@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'brynwibowo',
   author: 'bryan wibowo',
   headerTitle: 'brynwibowo',
-  description: 'Linux, Unix and Open Source Software ',
+  description: '',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://brynwibowo.vercel.app',
